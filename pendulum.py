@@ -1,5 +1,6 @@
 import pygame
 import math
+import displayData
 
 pygame.init()
 
@@ -67,11 +68,11 @@ def main():
             base_acceleration = base_speed
 
         if base_x == 0 and base_acceleration < 0:
-            base_speed = 0
+            base_speed = 0.0  # Explicitly assign a float value
         elif base_x == width - base_width and base_acceleration > 0:
-            base_speed = 0
+            base_speed = 0.0  # Explicitly assign a float value
         else:
-            base_speed = 5
+            base_speed = 5.0  # Explicitly assign a float value
 
         base_x += base_acceleration
         base_x = max(min(base_x, width - base_width), 0)
@@ -84,14 +85,28 @@ def main():
         pendulum_angular_velocity += (pendulum_gravity_acceleration + pendulum_horizontal_acceleration) * delta_t
         pendulum_angular_velocity *= calculate_damper(abs(pendulum_angular_velocity))
         pendulum_angle += pendulum_angular_velocity * delta_t
+        
+
+        ## make the angle between 0 and 360 degrees, 180 degrees is the vertical position (upwards)
+        pendulum_angle = pendulum_angle % (2 * math.pi)
+        
+
+
+
 
 
 
         draw_base(base_x, base_y)
         draw_pendulum(base_x + base_width / 2, base_y, pendulum_angle)
+        # In pendulum.py
+        displayData.display_base_x_position(screen, base_x, width, base_width)  # Add base_width as an argument
+        displayData.display_base_speed(screen, base_acceleration/5)  # Change the argument
+        displayData.display_pendulum_angle(screen, pendulum_angle)
+        displayData.display_pendulum_angular_velocity(screen, pendulum_angular_velocity)
 
         pygame.display.flip()
         clock.tick(60)
 
 if __name__ == '__main__':
     main()
+
