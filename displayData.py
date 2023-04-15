@@ -50,3 +50,8 @@ def display_pendulum_angular_velocity(screen, pendulum_angular_velocity):
     font = pygame.font.Font(None, 36)
     text = font.render(f"Pendulum Angular Velocity: {angular_velocity:.1f} (Normalized: {normalized_pendulum_angular_velocity*12:.2f})", True, black, white)
     screen.blit(text, (10, 130))
+
+def display_input_data(screen, key_left, key_right):
+    font = pygame.font.Font(None, 36)
+    text = font.render(f"Input Data: Left: {key_left}, Right: {key_right}", True, black, white)
+    screen.blit(text, (10, 170))

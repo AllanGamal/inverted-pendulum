@@ -53,6 +53,8 @@ def main():
     global base_x, pendulum_angle, pendulum_angular_velocity, base_speed
     clock = pygame.time.Clock()
     running = True
+    key_left = False
+    key_right = False
     while running:
         screen.fill(white)
 
@@ -64,15 +66,21 @@ def main():
         base_acceleration = 0
         if keys[pygame.K_LEFT]:
             base_acceleration = -base_speed
+            key_left = True
+        else:
+            key_left = False
         if keys[pygame.K_RIGHT]:
             base_acceleration = base_speed
+            key_right = True
+        else:
+            key_right = False
 
         if base_x == 0 and base_acceleration < 0:
-            base_speed = 0.0  # Explicitly assign a float value
+            base_speed = 0
         elif base_x == width - base_width and base_acceleration > 0:
-            base_speed = 0.0  # Explicitly assign a float value
+            base_speed = 0
         else:
-            base_speed = 5.0  # Explicitly assign a float value
+            base_speed = 5
 
         base_x += base_acceleration
         base_x = max(min(base_x, width - base_width), 0)
@@ -103,6 +111,7 @@ def main():
         displayData.display_base_speed(screen, base_acceleration/5)  # Change the argument
         displayData.display_pendulum_angle(screen, pendulum_angle)
         displayData.display_pendulum_angular_velocity(screen, pendulum_angular_velocity)
+        displayData.display_input_data(screen, key_left, key_right)
 
         pygame.display.flip()
         clock.tick(60)
