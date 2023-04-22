@@ -99,11 +99,6 @@ def main():
         pendulum_angle = pendulum_angle % (2 * math.pi)
         
 
-
-
-
-
-
         draw_base(base_x, base_y)
         draw_pendulum(base_x + base_width / 2, base_y, pendulum_angle)
         # In pendulum.py
